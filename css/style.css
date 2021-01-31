@@ -49,7 +49,8 @@ a:hover {
 }
 
 #logo a {
-	color: rgb(0, 0, 0);
+	color: #0000FF;
+	text-decoration: none;
 }
 
 #logo a:hover {
@@ -66,7 +67,7 @@ a:hover {
 #menu a {
 	color: rgb(0, 0, 0);
 	font-family: "メイリオ", Meiryo;
-	font-size: 1.8em;
+	font-size: 1.5em;
 	text-transform: capitalize;
 	text-decoration: none;
 	margin-right: 30px;
@@ -74,7 +75,7 @@ a:hover {
 }
 
 #menu a:hover, #menu a.active {
-	color: #b22222;
+	color: #b81717;
 }
 
 hr.style-one {
