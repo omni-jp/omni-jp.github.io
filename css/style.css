@@ -54,7 +54,8 @@ a:hover {
 }
 
 #logo a:hover {
-	text-decoration: none;
+	color: #C74B15;
+	text-decoration: underline;
 }
 
 #menu {
