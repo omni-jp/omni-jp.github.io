@@ -1,0 +1,137 @@
+﻿@charset "utf-8";
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, input, textarea, p, th, td, img {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body {
+	background-color: #ffffff;
+	line-height: 2;
+	font-family: "メイリオ", Meiryo, "ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro";
+	font-size: 75%;
+	color: #000000;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+a {
+	color: #0000FF;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #C74B15;
+	text-decoration: underline;
+}
+
+.color1 {
+	color: #990000;
+}
+
+#header {
+	position: relative;
+	height: 30px;
+	width: 900px;
+	margin: 10px auto;
+}
+
+#logo {
+	position: absolute;
+	left: 0;
+	top: 5px;
+	line-height: 20px;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+#logo a {
+	color: rgb(0, 0, 0);
+}
+
+#logo a:hover {
+	text-decoration: none;
+}
+
+#menu {
+	position: absolute;
+	right: 0px;
+	top: 10px;
+	text-align: center;
+}
+
+#menu a {
+	color: rgb(0, 0, 0);
+	font-family: "メイリオ", Meiryo;
+	font-size: 1.8em;
+	text-transform: capitalize;
+	text-decoration: none;
+	margin-right: 30px;
+	line-height: 15px;
+}
+
+#menu a:hover, #menu a.active {
+	color: #b22222;
+}
+
+hr.style-one {
+	border: 0;
+	height: 1px;
+	background: #999;
+	background-image: -webkit-linear-gradient(left, #eee, #999, #eee);
+	background-image:    -moz-linear-gradient(left, #eee, #999, #eee);
+	background-image:     -ms-linear-gradient(left, #eee, #999, #eee);
+	background-image:      -o-linear-gradient(left, #eee, #999, #eee);
+}
+
+h1 {
+	margin-bottom: 10px;
+	color: rgb(0, 0, 0);
+	font-weight: normal;
+	font-size: 2.2em;
+	text-align: center;
+}
+
+#container {
+	width: 900px;
+	margin: 0 auto;
+}
+
+#content {
+	margin: 50px 0;
+	text-align: left;
+}
+
+#footer {
+	height: 50px;
+	width: 100%;
+}
+
+#footer p {
+	margin-top: 5px;
+	text-align: center;
+	font-size: 0.75em;
+	color: #000000;
+}
+
+#content h2 {
+	font-size: 2em;
+	font-weight: normal;
+	margin: 10px 0;
+}
+
+#content ul {
+	margin-bottom: 20px;
+}
+
+#content ul li {
+	padding: 10px 0;
+	font-size: 1.2em;
+}
+
+#content a:hover img {
+	border: solid 1px #c9171e;
+}
