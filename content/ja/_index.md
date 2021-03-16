@@ -30,7 +30,7 @@ Open Mobile Network Infra Community Japan (<strong>omni-jp</strong>) とは，
 情報交換や雑談，質問をする場になります．  
 お気軽にご参加ください．
 
-[Slack Workspaceに参加する](https://join.slack.com/t/omni-jp/shared_invite/zt-mfp1dskx-Td91V0wzoUwFt88xfvtESg)
+[Slack Workspaceに参加する](https://join.slack.com/t/omni-jp/shared_invite/zt-nrwl8rw3-gZIS1FckzeQ2efagTrWUpA)
 
 {{% /blocks/feature %}}
 
