@@ -1,0 +1,39 @@
+{{ define "main" }}
+<div class="row">
+	<div class="col-12">
+
+		<h1>{{ .Title }}</h1>
+		<p>{{dateFormat "2006/1/2" .Date}}</p>
+
+		{{ $applicationForm := .Params.applicationForm }}
+		{{ if $applicationForm }}
+			<h3><a href="{{$applicationForm}}" rel="nofollow noopener">発表者募集中！</a></h3>
+		{{ end }}
+		
+		{{ .Content }}
+		<hr>
+		{{ $yid := .Params.youtube}}
+		{{ if $yid}}
+		<h3>動画</h3>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/{{$yid}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>	
+		{{ end }}
+		<ul class="list-unstyled mt-4">
+			{{ $pag := .}}
+			{{ range .Params.presentations}}
+			<li class="media mb-4">
+			<div class="media-body">
+				<h5 class="mt-0 mb-1">{{ .title | markdownify }} by <strong>{{.speaker | markdownify}}</strong></h5>
+				<div>
+					{{ range $index, $element := .docs}}
+					<span>
+						<a href="{{$pag.URL}}docs/{{$element}}">資料{{add $index 1}}</a>
+					</span>
+					{{ end}}
+				</div>
+			</div>
+			</li>
+			{{ end }}
+		</ul>
+	</div>
+</div>
+{{ end }}
