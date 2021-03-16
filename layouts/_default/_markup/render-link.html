@@ -1,0 +1,1 @@
+<a href="{{ .Destination | safeURL }}"{{ if hasPrefix .Destination "http" }} target="_blank" rel="nofollow noopener"{{ end }}>{{ .Text | safeHTML }}</a>
