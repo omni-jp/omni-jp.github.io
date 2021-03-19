@@ -9,7 +9,12 @@
 		{{ if $applicationForm }}
 			<h3><a href="{{$applicationForm}}" rel="nofollow noopener">発表者募集中！</a></h3>
 		{{ end }}
-		
+
+		{{ $meetupInfo := .Params.meetupInfo }}
+		{{ if $meetupInfo }}
+			<h3>{{ .Title }}の概要は<a href="{{$meetupInfo}}" rel="nofollow noopener">こちら </a>(Connpass)</h3>
+		{{ end }}
+
 		{{ .Content }}
 		<hr>
 		{{ $yid := .Params.youtube}}
