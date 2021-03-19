@@ -5,7 +5,11 @@
     "postcss-cli": "^8.3.1"
   },
   "name": "omni-jp.github.io",
-  "repository": "omni-jp.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omni-jp/omni-jp.github.io.git"
+  },
   "license": "MIT",
-  "description": "Official Website for Open Mobile Network Infra User Group by GitHub Pages."
+  "description": "Official Website for Open Mobile Network Infra User Group by GitHub Pages.",
+  "version": "1.0.0"
 }
