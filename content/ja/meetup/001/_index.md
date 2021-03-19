@@ -21,6 +21,7 @@ presentations:
     speaker: Kazuma Kamienoo
     docs:
       - "210204_Free5GCのUE・RAN疑似について.pdf"
+meetupInfo: https://omni-jp.connpass.com/event/201668/
 ---
 
 
