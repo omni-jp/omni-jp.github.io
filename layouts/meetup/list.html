@@ -31,7 +31,7 @@
 				<div>
 					{{ range $index, $element := .docs}}
 					<span>
-						<a href="{{$pag.URL}}docs/{{$element}}">資料{{add $index 1}}</a>
+						<a href="{{$element}}" rel="nofollow noopener">資料{{add $index 1}}</a>
 					</span>
 					{{ end}}
 				</div>
