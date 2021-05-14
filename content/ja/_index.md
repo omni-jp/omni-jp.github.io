@@ -18,13 +18,15 @@ Open Mobile Network Infra Community Japan (<strong>omni-jp</strong>) とは，
 
 {{% blocks/section color="white"%}}
 
-{{% blocks/feature title="Meetup" %}}
+{{% blocks/feature title="Events" %}}
 2-3カ月に1回Meetupを開催予定です．  
-発表者も随時受け付けています．
+発表者も随時受け付けています．  
 
 [Meetup発表申込フォーム](https://docs.google.com/forms/d/e/1FAIpQLSfPyOnXtg-nGFLD7H0tIMLD2J00URC0J9-IlwVmhCu_qU48hw/viewform)
 
-[過去のMeetup](/meetup)
+不定期でHands-on等も実施してます.
+
+[過去のイベント](/events)
 
 {{% /blocks/feature %}}
 
