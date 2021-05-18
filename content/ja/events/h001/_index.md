@@ -14,6 +14,6 @@ presentations:
 ## Contents
 
 * [イベント概要(connpass)](https://omni-jp.connpass.com/event/210491/)
-* [Hands-on 手順書](https://github.com/omni-jp/oai-test-docker-image)
+* [Hands-on 手順書](https://github.com/omni-jp/hands-on/tree/main/hands-on%231)
 
 
