@@ -10,6 +10,7 @@ presentations:
   - title: "OOL活動紹介とkata-containerで動かすfree5gc"
     speaker: "Yoshifumi Sumida"
     docs: 
+      - "https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%233/%E6%B2%96%E7%B8%84%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%83%A9%E3%83%9C%E3%83%A9%E3%83%88%E3%83%AA%E3%81%94%E7%B4%B9%E4%BB%8B%E3%81%A8kata-conatiner%E3%81%A7%E5%8B%95%E3%81%8B%E3%81%99free5gc.pdf"
   - title: "OpenStack Tackerによるfree5GCのLCM操作デモの紹介"
     speaker: "Kentaro Ogawa"
     docs: 
