@@ -18,6 +18,7 @@ presentations:
   - title: "Open Networking Foundation(ONF)におけるモバイルプラットフォーム動向"
     speaker: Shinji Yonesaka
     docs: 
+      - "https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%233/ONF%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E5%8B%95%E5%90%91.pdf"
   - title: "野良OSS活動のススメ"
     speaker: "Yoshiyuki Kurauchi"
     docs: 
