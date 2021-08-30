@@ -120,7 +120,7 @@ github_repo = "https://github.com/omni-jp/omni-jp.github.io"
 github_project_repo = "https://github.com/omni-jp/omni-jp.github.io"
 
 # Specify a value here if your content directory is not in your repo's root directory
-github_subdir = "userguide"
+github_subdir = ""
 
 time_format_blog = "Monday, January 02, 2006"
 time_format_default = "January 2, 2006"
