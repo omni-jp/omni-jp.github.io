@@ -13,6 +13,8 @@ presentations:
       - "https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%234/XDP%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88%E3%81%A8CI.pdf"
   - title: "NextEPCを用いたsXGP環境構築と実機検証"
     speaker: "Sei Kim"
+    docs:
+      - "https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%234/NextEPC%E3%82%92%E7%94%A8%E3%81%84%E3%81%9FsXGP%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%E3%81%A8%E5%AE%9F%E6%A9%9F%E6%A4%9C%E8%A8%BC.pdf"
   - title: "UPFの下周り性能ネタ(gtp5g他)"
     speaker: "Masakazu Asama"
     docs:
