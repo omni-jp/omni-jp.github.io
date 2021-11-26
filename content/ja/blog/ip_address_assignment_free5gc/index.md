@@ -15,7 +15,37 @@ UEのIPアドレスの割り当てについて、free5GCではどのように実
 
 ## 5Gの規格ではどうなっているのか?
 
-T.B.D
+TS 23.501の5.8.2.2 UE IP Address Managementで詳細な仕様が述べられていますが、ざっくりまとめると以下の仕様になっています。
+
+* NGAP/NASを通してUEとSMFの間でPDU Session Typeがやりとりされる。
+* PDU Session TypeによってIPv4かIPv6か決まる。
+* IPアドレスの割り当ては大きくわけて2種類ある。
+  1. PDU Session確立後にDHCPもしくはDN-AAAを利用してIPアドレスの割り当てを行う。
+  2. PDU Sessionの確立中にSMFがSM NAS Signalingを介してUEのIPアドレスを送信する。
+
+DHCPやDN-AAA以外にもSMFが割り当てるという仕様も存在することがわかりました。
+では実際にfree5GCではどのような実装になっているのか追ってみたいと思います。
+
+
+## パケットキャプチャで確認
+
+UERANSIMとfree5GCで簡単な構成を組んでパケットをキャプチャして確認してみます。
+
+DHCPやDN-AAAであれば、N3のU-Plane側でそれぞれのプロトコルのやりとりがあるはずです。 一方で、SMFが割り当てる方式であればSM NAS Signalingの中にUEのIPアドレスが入っていることが確認できるはずです。
+
+N3のU-Plane側のキャプチャを見てみましょう。
+
+![Pic](n3.png)
+
+UEのIPアドレスが確定した状態のパケットしかありません。
+
+今度はN1/N2のC-Plane側のキャプチャを見てみましょう。
+
+![Pic](nas-signaling.png)
+
+UEからのPDU Session Establish requestに対する応答で、NASの中にPDU Addressフィールドがあり、そこにUEのIPアドレスが入っていることが確認できます。
+
+free5GCではDHCP/DN-AAAではなくSMFがUEのIPアドレスを割り当てる実装になっていることがわかりました。
 
 
 ## SMFの実装を追ってみる
@@ -77,7 +107,8 @@ func (i *_IDPool) release(id int64) {
 
 このメソッドからわかることは、allocate()を呼び出すとint64の型の値が返ってくる。そしてallocate()で割り当てられたidをrelease()に渡して呼び出すときっとプールに戻してくれる(はず)。
 
-そして、構造体のメンバーから察すると、minValue以上、maxValue未満の範囲でint64のidを割り当ててくれる。そして要らなくなったidを戻すとちゃんとプールに戻してくれて再利用可能な状態にしてくれる。
+そして、構造体のメンバーから察すると、minValue以上、maxValue未満の範囲でint64のidを割り当ててくれる。割り当ては常にminValueから順番に探索していき、使用していない最も小さい値を返す。
+要らなくなったidをreleaseに渡すとプールに戻してくれて再利用可能な状態にしてくれる。
 
 こんなところでしょうか。
 
@@ -132,8 +163,8 @@ IPv6の場合は見なかったことにして(え?)、アロケータの初期�
 
 ## まとめ
 
-free5GCでは、DHCPでもRADIUSサーバーでもなく、SMFが独自の方式でUEのIPアドレスの割り当てを行っている。
-
+* free5GCでは、DHCPでもRADIUSサーバーでもなく、SMFが独自の方式でUEのIPアドレスの割り当てを行っている。
+* free5GCのSMFのIPアドレス割り当ての実装では、IPアドレスプールの中で最も小さい値が割り当てられるようになっている。
 
 ## おまけ
 
