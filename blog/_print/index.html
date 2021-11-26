@@ -190,6 +190,9 @@ IPv6であってもどうやらIPv4と同じ範囲しか割り当てできなさ
 <h2 id=おまけ>おまけ</h2>
 <p>私(hirono)だったらisUsedのマップじゃなくてfreeリスト方式にします。
 そうすれば割り当ての計算量もO(1)で済みますし解放もO(1)で済みます。</p>
+<p>例えばこんな感じです。
+<a href=https://gist.github.com/khirono/a51298897008c70492be5c94fbc66fcd target=_blank rel="nofollow noopener">https://gist.github.com/khirono/a51298897008c70492be5c94fbc66fcd</a></p>
+<p>int64をやめて[]byteにするとかまだまだ改善の余地はあります。</p>
 </div>
 <div class=td-content style=page-break-before:always>
 <h1 id=pg-2d1ee9fe9f63bae9ad08a135fd5a7665>Test</h1>
