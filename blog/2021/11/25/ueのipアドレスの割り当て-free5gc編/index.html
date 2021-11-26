@@ -33,7 +33,7 @@ type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふ�
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://omni-jp.github.io/blog/2021/11/25/ue%E3%81%AEip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AE%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6-free5gc%E7%B7%A8/"><meta property="article:section" content="blog">
 <meta property="article:published_time" content="2021-11-25T15:40:00+09:00">
-<meta property="article:modified_time" content="2021-11-26T12:24:04+09:00"><meta property="og:site_name" content="OMNI JP">
+<meta property="article:modified_time" content="2021-11-26T12:28:46+09:00"><meta property="og:site_name" content="OMNI JP">
 <meta itemprop=name content="UEのIPアドレスの割り当て -- free5GC編 --">
 <meta itemprop=description content="はじめに 5GではUEのIPアドレスは、どのような仕組みで割り当てられるのでしょうか? 5GCがDHCPサーバーの機能を保有しているのでしょうか? はたまた、5GCとは別にRADIUSサーバーが存在しており、5GCとRADIUSサーバーが連携することでIPアドレスが割り当てられるのでしょうか?
 UEのIPアドレスの割り当てについて、free5GCではどのように実現しているのか解説したいと思います。
@@ -51,7 +51,7 @@ github.com/free5gc/smf/ +- context/ +- ip_allocator.go contextディレクトリ
 type IPAllocator struct { ipNetwork *net.IPNet g *_IDPool } いかにもIPアドレスを割り当てそうな名前の構造体です。 メンバーとしてipNetworkという名前のネットワークアドレスとgという名前のIPアドレスのプールらしきものを保有しています。 この構造体を使って割り当てを行っていると考えて間違いないでしょう。
 ネットワークアドレスはわかるとして、この_IDPoolとは具体的になにものなのか見てみましょう。
 type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふむふむ。最大値と最小値らしきものを保有してますね。 他にもisUsedというboolean型のマップも持っています。これはIPアドレスが実際に使用されているかどうかを判定するためのものでしょうか。 それにしても不思議です。IPアドレスを表現する型であれば4byteか16byteのbyte列となるはずです。しかし、なぜかint64になっています。"><meta itemprop=datePublished content="2021-11-25T15:40:00+09:00">
-<meta itemprop=dateModified content="2021-11-26T12:24:04+09:00">
+<meta itemprop=dateModified content="2021-11-26T12:28:46+09:00">
 <meta itemprop=wordCount content="275">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="UEのIPアドレスの割り当て -- free5GC編 --">
@@ -271,7 +271,7 @@ IPv6であってもどうやらIPv4と同じ範囲しか割り当てできなさ
 <p>私(hirono)だったらisUsedのマップじゃなくてfreeリスト方式にします。
 そうすれば割り当ての計算量もO(1)で済みますし解放もO(1)で済みます。</p>
 <p>例えばこんな感じです。
-<a href=https://gist.github.com/khirono/a51298897008c70492be5c94fbc66fcd target=_blank rel="nofollow noopener">https://gist.github.com/khirono/a51298897008c70492be5c94fbc66fcd</a></p>
+<a href=https://gist.github.com/khirono/3c7b80e10e309006c4a0ec890b13dbc5 target=_blank rel="nofollow noopener">https://gist.github.com/khirono/3c7b80e10e309006c4a0ec890b13dbc5</a></p>
 <p>int64をやめて[]byteにするとかまだまだ改善の余地はあります。</p>
 <ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
 <li>
