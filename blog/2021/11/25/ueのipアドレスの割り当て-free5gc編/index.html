@@ -16,43 +16,61 @@
 <title>UEのIPアドレスの割り当て -- free5GC編 -- | OMNI JP</title><meta property="og:title" content="UEのIPアドレスの割り当て -- free5GC編 --">
 <meta property="og:description" content="はじめに 5GではUEのIPアドレスは、どのような仕組みで割り当てられるのでしょうか? 5GCがDHCPサーバーの機能を保有しているのでしょうか? はたまた、5GCとは別にRADIUSサーバーが存在しており、5GCとRADIUSサーバーが連携することでIPアドレスが割り当てられるのでしょうか?
 UEのIPアドレスの割り当てについて、free5GCではどのように実現しているのか解説したいと思います。
-5Gの規格ではどうなっているのか? T.B.D
+5Gの規格ではどうなっているのか? TS 23.501の5.8.2.2 UE IP Address Managementで詳細な仕様が述べられていますが、ざっくりまとめると以下の仕様になっています。
+ NGAP/NASを通してUEとSMFの間でPDU Session Typeがやりとりされる。 PDU Session TypeによってIPv4かIPv6か決まる。 IPアドレスの割り当ては大きくわけて2種類ある。  PDU Session確立後にDHCPもしくはDN-AAAを利用してIPアドレスの割り当てを行う。 PDU Sessionの確立中にSMFがSM NAS Signalingを介してUEのIPアドレスを送信する。    DHCPやDN-AAA以外にもSMFが割り当てるという仕様も存在することがわかりました。 では実際にfree5GCではどのような実装になっているのか追ってみたいと思います。
+パケットキャプチャで確認 UERANSIMとfree5GCで簡単な構成を組んでパケットをキャプチャして確認してみます。
+DHCPやDN-AAAであれば、N3のU-Plane側でそれぞれのプロトコルのやりとりがあるはずです。 一方で、SMFが割り当てる方式であればSM NAS Signalingの中にUEのIPアドレスが入っていることが確認できるはずです。
+N3のU-Plane側のキャプチャを見てみましょう。
+UEのIPアドレスが確定した状態のパケットしかありません。
+今度はN1/N2のC-Plane側のキャプチャを見てみましょう。
+UEからのPDU Session Establish requestに対する応答で、NASの中にPDU Addressフィールドがあり、そこにUEのIPアドレスが入っていることが確認できます。
+free5GCではDHCP/DN-AAAではなくSMFがUEのIPアドレスを割り当てる実装になっていることがわかりました。
 SMFの実装を追ってみる SMFのディレクトリを探索してみましょう。
 github.com/free5gc/smf/ +- context/ +- ip_allocator.go contextディレクトリ配下にip_allocator.goという、そのものズバリなソースコードがありますね。まずは構造体を見てみましょう。
 type IPAllocator struct { ipNetwork *net.IPNet g *_IDPool } いかにもIPアドレスを割り当てそうな名前の構造体です。 メンバーとしてipNetworkという名前のネットワークアドレスとgという名前のIPアドレスのプールらしきものを保有しています。 この構造体を使って割り当てを行っていると考えて間違いないでしょう。
 ネットワークアドレスはわかるとして、この_IDPoolとは具体的になにものなのか見てみましょう。
-type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふむふむ。最大値と最小値らしきものを保有してますね。 他にもisUsedというboolean型のマップも持っています。これはIPアドレスが実際に使用されているかどうかを判定するためのものでしょうか。 それにしても不思議です。IPアドレスを表現する型であれば4byteか16byteのbyte列となるはずです。しかし、なぜかint64になっています。
-int64の謎は後で詳しく調べることにして、この_IDPoolのメソッドを見てみましょう。
-func (i *_IDPool) allocate() (id int64, err error) { for id := i.minValue; id <= i.maxValue; id++ { if _, exist := i.isUsed[id]; !exist { i.isUsed[id] = true return id, nil } } return 0, errors.">
+type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふむふむ。最大値と最小値らしきものを保有してますね。 他にもisUsedというboolean型のマップも持っています。これはIPアドレスが実際に使用されているかどうかを判定するためのものでしょうか。 それにしても不思議です。IPアドレスを表現する型であれば4byteか16byteのbyte列となるはずです。しかし、なぜかint64になっています。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://omni-jp.github.io/blog/2021/11/25/ue%E3%81%AEip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AE%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6-free5gc%E7%B7%A8/"><meta property="article:section" content="blog">
 <meta property="article:published_time" content="2021-11-25T15:40:00+09:00">
-<meta property="article:modified_time" content="2021-11-25T17:06:17+09:00"><meta property="og:site_name" content="OMNI JP">
+<meta property="article:modified_time" content="2021-11-26T10:20:32+09:00"><meta property="og:site_name" content="OMNI JP">
 <meta itemprop=name content="UEのIPアドレスの割り当て -- free5GC編 --">
 <meta itemprop=description content="はじめに 5GではUEのIPアドレスは、どのような仕組みで割り当てられるのでしょうか? 5GCがDHCPサーバーの機能を保有しているのでしょうか? はたまた、5GCとは別にRADIUSサーバーが存在しており、5GCとRADIUSサーバーが連携することでIPアドレスが割り当てられるのでしょうか?
 UEのIPアドレスの割り当てについて、free5GCではどのように実現しているのか解説したいと思います。
-5Gの規格ではどうなっているのか? T.B.D
+5Gの規格ではどうなっているのか? TS 23.501の5.8.2.2 UE IP Address Managementで詳細な仕様が述べられていますが、ざっくりまとめると以下の仕様になっています。
+ NGAP/NASを通してUEとSMFの間でPDU Session Typeがやりとりされる。 PDU Session TypeによってIPv4かIPv6か決まる。 IPアドレスの割り当ては大きくわけて2種類ある。  PDU Session確立後にDHCPもしくはDN-AAAを利用してIPアドレスの割り当てを行う。 PDU Sessionの確立中にSMFがSM NAS Signalingを介してUEのIPアドレスを送信する。    DHCPやDN-AAA以外にもSMFが割り当てるという仕様も存在することがわかりました。 では実際にfree5GCではどのような実装になっているのか追ってみたいと思います。
+パケットキャプチャで確認 UERANSIMとfree5GCで簡単な構成を組んでパケットをキャプチャして確認してみます。
+DHCPやDN-AAAであれば、N3のU-Plane側でそれぞれのプロトコルのやりとりがあるはずです。 一方で、SMFが割り当てる方式であればSM NAS Signalingの中にUEのIPアドレスが入っていることが確認できるはずです。
+N3のU-Plane側のキャプチャを見てみましょう。
+UEのIPアドレスが確定した状態のパケットしかありません。
+今度はN1/N2のC-Plane側のキャプチャを見てみましょう。
+UEからのPDU Session Establish requestに対する応答で、NASの中にPDU Addressフィールドがあり、そこにUEのIPアドレスが入っていることが確認できます。
+free5GCではDHCP/DN-AAAではなくSMFがUEのIPアドレスを割り当てる実装になっていることがわかりました。
 SMFの実装を追ってみる SMFのディレクトリを探索してみましょう。
 github.com/free5gc/smf/ +- context/ +- ip_allocator.go contextディレクトリ配下にip_allocator.goという、そのものズバリなソースコードがありますね。まずは構造体を見てみましょう。
 type IPAllocator struct { ipNetwork *net.IPNet g *_IDPool } いかにもIPアドレスを割り当てそうな名前の構造体です。 メンバーとしてipNetworkという名前のネットワークアドレスとgという名前のIPアドレスのプールらしきものを保有しています。 この構造体を使って割り当てを行っていると考えて間違いないでしょう。
 ネットワークアドレスはわかるとして、この_IDPoolとは具体的になにものなのか見てみましょう。
-type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふむふむ。最大値と最小値らしきものを保有してますね。 他にもisUsedというboolean型のマップも持っています。これはIPアドレスが実際に使用されているかどうかを判定するためのものでしょうか。 それにしても不思議です。IPアドレスを表現する型であれば4byteか16byteのbyte列となるはずです。しかし、なぜかint64になっています。
-int64の謎は後で詳しく調べることにして、この_IDPoolのメソッドを見てみましょう。
-func (i *_IDPool) allocate() (id int64, err error) { for id := i.minValue; id <= i.maxValue; id++ { if _, exist := i.isUsed[id]; !exist { i.isUsed[id] = true return id, nil } } return 0, errors."><meta itemprop=datePublished content="2021-11-25T15:40:00+09:00">
-<meta itemprop=dateModified content="2021-11-25T17:06:17+09:00">
-<meta itemprop=wordCount content="235">
+type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふむふむ。最大値と最小値らしきものを保有してますね。 他にもisUsedというboolean型のマップも持っています。これはIPアドレスが実際に使用されているかどうかを判定するためのものでしょうか。 それにしても不思議です。IPアドレスを表現する型であれば4byteか16byteのbyte列となるはずです。しかし、なぜかint64になっています。"><meta itemprop=datePublished content="2021-11-25T15:40:00+09:00">
+<meta itemprop=dateModified content="2021-11-26T10:20:32+09:00">
+<meta itemprop=wordCount content="272">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="UEのIPアドレスの割り当て -- free5GC編 --">
 <meta name=twitter:description content="はじめに 5GではUEのIPアドレスは、どのような仕組みで割り当てられるのでしょうか? 5GCがDHCPサーバーの機能を保有しているのでしょうか? はたまた、5GCとは別にRADIUSサーバーが存在しており、5GCとRADIUSサーバーが連携することでIPアドレスが割り当てられるのでしょうか?
 UEのIPアドレスの割り当てについて、free5GCではどのように実現しているのか解説したいと思います。
-5Gの規格ではどうなっているのか? T.B.D
+5Gの規格ではどうなっているのか? TS 23.501の5.8.2.2 UE IP Address Managementで詳細な仕様が述べられていますが、ざっくりまとめると以下の仕様になっています。
+ NGAP/NASを通してUEとSMFの間でPDU Session Typeがやりとりされる。 PDU Session TypeによってIPv4かIPv6か決まる。 IPアドレスの割り当ては大きくわけて2種類ある。  PDU Session確立後にDHCPもしくはDN-AAAを利用してIPアドレスの割り当てを行う。 PDU Sessionの確立中にSMFがSM NAS Signalingを介してUEのIPアドレスを送信する。    DHCPやDN-AAA以外にもSMFが割り当てるという仕様も存在することがわかりました。 では実際にfree5GCではどのような実装になっているのか追ってみたいと思います。
+パケットキャプチャで確認 UERANSIMとfree5GCで簡単な構成を組んでパケットをキャプチャして確認してみます。
+DHCPやDN-AAAであれば、N3のU-Plane側でそれぞれのプロトコルのやりとりがあるはずです。 一方で、SMFが割り当てる方式であればSM NAS Signalingの中にUEのIPアドレスが入っていることが確認できるはずです。
+N3のU-Plane側のキャプチャを見てみましょう。
+UEのIPアドレスが確定した状態のパケットしかありません。
+今度はN1/N2のC-Plane側のキャプチャを見てみましょう。
+UEからのPDU Session Establish requestに対する応答で、NASの中にPDU Addressフィールドがあり、そこにUEのIPアドレスが入っていることが確認できます。
+free5GCではDHCP/DN-AAAではなくSMFがUEのIPアドレスを割り当てる実装になっていることがわかりました。
 SMFの実装を追ってみる SMFのディレクトリを探索してみましょう。
 github.com/free5gc/smf/ +- context/ +- ip_allocator.go contextディレクトリ配下にip_allocator.goという、そのものズバリなソースコードがありますね。まずは構造体を見てみましょう。
 type IPAllocator struct { ipNetwork *net.IPNet g *_IDPool } いかにもIPアドレスを割り当てそうな名前の構造体です。 メンバーとしてipNetworkという名前のネットワークアドレスとgという名前のIPアドレスのプールらしきものを保有しています。 この構造体を使って割り当てを行っていると考えて間違いないでしょう。
 ネットワークアドレスはわかるとして、この_IDPoolとは具体的になにものなのか見てみましょう。
-type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふむふむ。最大値と最小値らしきものを保有してますね。 他にもisUsedというboolean型のマップも持っています。これはIPアドレスが実際に使用されているかどうかを判定するためのものでしょうか。 それにしても不思議です。IPアドレスを表現する型であれば4byteか16byteのbyte列となるはずです。しかし、なぜかint64になっています。
-int64の謎は後で詳しく調べることにして、この_IDPoolのメソッドを見てみましょう。
-func (i *_IDPool) allocate() (id int64, err error) { for id := i.minValue; id <= i.maxValue; id++ { if _, exist := i.isUsed[id]; !exist { i.isUsed[id] = true return id, nil } } return 0, errors.">
+type _IDPool struct { minValue int64 maxValue int64 isUsed map[int64]bool } ふむふむ。最大値と最小値らしきものを保有してますね。 他にもisUsedというboolean型のマップも持っています。これはIPアドレスが実際に使用されているかどうかを判定するためのものでしょうか。 それにしても不思議です。IPアドレスを表現する型であれば4byteか16byteのbyte列となるはずです。しかし、なぜかint64になっています。">
 <link rel=preload href=https://omni-jp.github.io/scss/main.min.0bf3a2a5ab2cd69979c3f1fda576e6d32e2013c4acd9d77163d19df37a0e190f.css as=style>
 <link href=https://omni-jp.github.io/scss/main.min.0bf3a2a5ab2cd69979c3f1fda576e6d32e2013c4acd9d77163d19df37a0e190f.css rel=stylesheet integrity>
 <script src=https://code.jquery.com/jquery-3.5.1.min.js integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin=anonymous></script>
@@ -124,6 +142,7 @@ func (i *_IDPool) allocate() (id int64, err error) { for id := i.minValue; id <=
 <ul>
 <li><a href=#はじめに>はじめに</a></li>
 <li><a href=#5gの規格ではどうなっているのか>5Gの規格ではどうなっているのか?</a></li>
+<li><a href=#パケットキャプチャで確認>パケットキャプチャで確認</a></li>
 <li><a href=#smfの実装を追ってみる>SMFの実装を追ってみる</a></li>
 <li><a href=#まとめ>まとめ</a></li>
 <li><a href=#おまけ>おまけ</a></li>
@@ -142,7 +161,29 @@ func (i *_IDPool) allocate() (id int64, err error) { for id := i.minValue; id <=
 はたまた、5GCとは別にRADIUSサーバーが存在しており、5GCとRADIUSサーバーが連携することでIPアドレスが割り当てられるのでしょうか?</p>
 <p>UEのIPアドレスの割り当てについて、free5GCではどのように実現しているのか解説したいと思います。</p>
 <h2 id=5gの規格ではどうなっているのか>5Gの規格ではどうなっているのか?</h2>
-<p>T.B.D</p>
+<p>TS 23.501の5.8.2.2 UE IP Address Managementで詳細な仕様が述べられていますが、ざっくりまとめると以下の仕様になっています。</p>
+<ul>
+<li>NGAP/NASを通してUEとSMFの間でPDU Session Typeがやりとりされる。</li>
+<li>PDU Session TypeによってIPv4かIPv6か決まる。</li>
+<li>IPアドレスの割り当ては大きくわけて2種類ある。
+<ol>
+<li>PDU Session確立後にDHCPもしくはDN-AAAを利用してIPアドレスの割り当てを行う。</li>
+<li>PDU Sessionの確立中にSMFがSM NAS Signalingを介してUEのIPアドレスを送信する。</li>
+</ol>
+</li>
+</ul>
+<p>DHCPやDN-AAA以外にもSMFが割り当てるという仕様も存在することがわかりました。
+では実際にfree5GCではどのような実装になっているのか追ってみたいと思います。</p>
+<h2 id=パケットキャプチャで確認>パケットキャプチャで確認</h2>
+<p>UERANSIMとfree5GCで簡単な構成を組んでパケットをキャプチャして確認してみます。</p>
+<p>DHCPやDN-AAAであれば、N3のU-Plane側でそれぞれのプロトコルのやりとりがあるはずです。 一方で、SMFが割り当てる方式であればSM NAS Signalingの中にUEのIPアドレスが入っていることが確認できるはずです。</p>
+<p>N3のU-Plane側のキャプチャを見てみましょう。</p>
+<p><img src=n3.png alt=Pic></p>
+<p>UEのIPアドレスが確定した状態のパケットしかありません。</p>
+<p>今度はN1/N2のC-Plane側のキャプチャを見てみましょう。</p>
+<p><img src=nas-signaling.png alt=Pic></p>
+<p>UEからのPDU Session Establish requestに対する応答で、NASの中にPDU Addressフィールドがあり、そこにUEのIPアドレスが入っていることが確認できます。</p>
+<p>free5GCではDHCP/DN-AAAではなくSMFがUEのIPアドレスを割り当てる実装になっていることがわかりました。</p>
 <h2 id=smfの実装を追ってみる>SMFの実装を追ってみる</h2>
 <p>SMFのディレクトリを探索してみましょう。</p>
 <pre tabindex=0><code>github.com/free5gc/smf/
@@ -180,7 +221,8 @@ func (i *_IDPool) allocate() (id int64, err error) { for id := i.minValue; id <=
 	<span style=color:#204a87>delete</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>i</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>isUsed</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>id</span><span style=color:#000;font-weight:700>)</span>
 <span style=color:#000;font-weight:700>}</span>
 </code></pre></div><p>このメソッドからわかることは、allocate()を呼び出すとint64の型の値が返ってくる。そしてallocate()で割り当てられたidをrelease()に渡して呼び出すときっとプールに戻してくれる(はず)。</p>
-<p>そして、構造体のメンバーから察すると、minValue以上、maxValue未満の範囲でint64のidを割り当ててくれる。そして要らなくなったidを戻すとちゃんとプールに戻してくれて再利用可能な状態にしてくれる。</p>
+<p>そして、構造体のメンバーから察すると、minValue以上、maxValue未満の範囲でint64のidを割り当ててくれる。割り当ては常にminValueから順番に探索していき、使用していない最も小さい値を返す。
+要らなくなったidをreleaseに渡すとプールに戻してくれて再利用可能な状態にしてくれる。</p>
 <p>こんなところでしょうか。</p>
 <p>ざっくりした割り当ての方法はここで実装されていそうです。しかしint64という型のままだとIPv4の場合はまだおさまるとして、IPv6の時には困りますね。
 このあたりの型変換部分はきっとIPAllocator側でなんとかしているに違いありません。
@@ -221,7 +263,10 @@ IPv6であってもどうやらIPv4と同じ範囲しか割り当てできなさ
 </span><span style=color:#f8f8f8;text-decoration:underline>                </span><span style=color:#204a87;font-weight:700>pools</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline>
 </span><span style=color:#f8f8f8;text-decoration:underline></span><span style=color:#204a87;font-weight:700>&gt;&gt;&gt;               - cidr</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>60.60.0.0</span><span style=color:#000>/16</span><span style=color:#f8f8f8;text-decoration:underline>
 </span></code></pre></div><h2 id=まとめ>まとめ</h2>
-<p>free5GCでは、DHCPでもRADIUSサーバーでもなく、SMFが独自の方式でUEのIPアドレスの割り当てを行っている。</p>
+<ul>
+<li>free5GCでは、DHCPでもRADIUSサーバーでもなく、SMFが独自の方式でUEのIPアドレスの割り当てを行っている。</li>
+<li>free5GCのSMFのIPアドレス割り当ての実装では、IPアドレスプールの中で最も小さい値が割り当てられるようになっている。</li>
+</ul>
 <h2 id=おまけ>おまけ</h2>
 <p>私(hirono)だったらisUsedのマップじゃなくてfreeリスト方式にします。
 そうすれば割り当ての計算量もO(1)で済みますし解放もO(1)で済みます。</p>
