@@ -12,8 +12,8 @@ presentations:
       - "https://github.com/omni-jp/awesome-5g-omni"
   - title: "【初心者向け】3GPP仕様書リーディングガイド ～ 5GS仕様書を読もう"
     speaker: "Muneaki Ogawa"
-    # docs:
-    #   - ""
+    docs:
+      - "https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%235/3GPP%E4%BB%95%E6%A7%98%E6%9B%B8%E3%83%AA%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%AC%E3%82%A4%E3%83%89.pdf"
   - title: "2021秋 OAI Workshop について"
     speaker: "Masayuki Harada"
     # docs:
