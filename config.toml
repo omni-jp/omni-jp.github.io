@@ -95,6 +95,7 @@ weight = 1
 [params]
 copyright = "Open Mobile Network Infra Community"
 #privacy_policy = "https://policies.google.com/privacy"
+support = "運営への問い合わせ: omni.infra.jp[AT]gmail.com"
 
 # Menu title if your navbar has a versions selector to access old versions of your site.
 # This menu appears only if you have at least one [params.versions] set.
@@ -171,11 +172,11 @@ enable = false
 
 [params.links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
-[[params.links.user]]
-        name = "運営への問い合わせ"
-	url = "mailto:omni.infra.jp@gmail.com"
-	icon = "fa fa-envelope"
-        desc = "OMNI JP Official mailing list. "
+# [[params.links.user]]
+#         name = "運営への問い合わせ"
+# 	url = "mailto:omni.infra.jp@gmail.com"
+# 	icon = "fa fa-envelope"
+#         desc = "OMNI JP Official mailing list. "
 [[params.links.user]]
 	name ="Twitter"
 	url = "https://twitter.com/omni_infra_jp"
@@ -187,12 +188,12 @@ enable = false
 	# icon = "fab fa-stack-overflow"
         # desc = "Practical questions and curated answers"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
-[[params.links.developer]]
+[[params.links.user]]
 	name = "GitHub"
 	url = "https://github.com/omni-jp"
 	icon = "fab fa-github"
         desc = "Development takes place here!"
-[[params.links.developer]]
+[[params.links.user]]
 	name = "Slack"
 	url = "https://join.slack.com/t/omni-jp/shared_invite/zt-nrwl8rw3-gZIS1FckzeQ2efagTrWUpA"
 	icon = "fab fa-slack"
