@@ -176,27 +176,27 @@ enable = false
 	url = "mailto:omni.infra.jp@gmail.com"
 	icon = "fa fa-envelope"
         desc = "OMNI JP Official mailing list. "
-# [[params.links.user]]
-# 	name ="Twitter"
-# 	url = "https://twitter.com/docsydocs"
-# 	icon = "fab fa-twitter"
-#         desc = "Follow us on Twitter to get the latest news!"
+[[params.links.user]]
+	name ="Twitter"
+	url = "https://twitter.com/omni_infra_jp"
+	icon = "fab fa-twitter"
+        desc = "Follow us on Twitter to get the latest news!"
 # [[params.links.user]]
 	# name = "Stack Overflow"
 	# url = "https://example.org/stack"
 	# icon = "fab fa-stack-overflow"
         # desc = "Practical questions and curated answers"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
-# [[params.links.developer]]
-# 	name = "GitHub"
-# 	url = "https://github.com/google/docsy"
-# 	icon = "fab fa-github"
-#         desc = "Development takes place here!"
-# [[params.links.developer]]
-	# name = "Slack"
-	# url = "https://example.org/slack"
-	# icon = "fab fa-slack"
-        # desc = "Chat with other project developers"
+[[params.links.developer]]
+	name = "GitHub"
+	url = "https://github.com/omni-jp"
+	icon = "fab fa-github"
+        desc = "Development takes place here!"
+[[params.links.developer]]
+	name = "Slack"
+	url = "https://join.slack.com/t/omni-jp/shared_invite/zt-nrwl8rw3-gZIS1FckzeQ2efagTrWUpA"
+	icon = "fab fa-slack"
+        desc = "Chat with other project members"
 # [[params.links.developer]]
 	# name = "Developer mailing list"
 	# url = "https://example.org/mail"
