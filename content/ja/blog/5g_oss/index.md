@@ -1,40 +1,75 @@
 ---
-title: "UEのIPアドレスの割り当て -- free5GC編 --"
-date: 2021-11-25T15:40:00+09:00
+title: "5GのOSSってどこまで使えるの？"
+date: 2022-02-12T15:40:00+09:00
 draft: true
 ---
 
 ## はじめに
 
-5GではUEのIPアドレスは、どのような仕組みで割り当てられるのでしょうか?
-5GCがDHCPサーバーの機能を保有しているのでしょうか?
-はたまた、5GCとは別にRADIUSサーバーが存在しており、5GCとRADIUSサーバーが連携することでIPアドレスが割り当てられるのでしょうか?
+5Gあるいは5Gサービスと聞くとモバイルキャリアにより提供されるネットワークサービスで、大手ベンダ製品を使ってモバイルネットワークが構築されているイメージを持たれる方も多いのではないでしょうか。
 
-UEのIPアドレスの割り当てについて、free5GCではどのように実現しているのか解説したいと思います。
+最近では、5Gネットワークをオープンソースソフトウェア（以下、OSS）で実現する動きが出始めており、個人でも手軽に5G環境を構築することが可能となっています。
 
-
-## 5Gの規格ではどうなっているのか?
-
-TS 23.501の5.8.2.2 UE IP Address Managementで詳細な仕様が述べられていますが、ざっくりまとめると以下の仕様になっています。
-
-* NGAP/NASを通してUEとSMFの間でPDU Session Typeがやりとりされる。
-* PDU Session TypeによってIPv4かIPv6か決まる。
-* IPアドレスの割り当ては大きくわけて2種類ある。
-  1. PDU Session確立後にDHCPもしくはDN-AAAを利用してIPアドレスの割り当てを行う。
-  2. PDU Sessionの確立中にSMFがSM NAS Signalingを介してUEのIPアドレスを送信する。
-
-DHCPやDN-AAA以外にもSMFが割り当てるという仕様も存在することがわかりました。
-では実際にfree5GCではどのような実装になっているのか追ってみたいと思います。
+本記事では、5GのOSSについて紹介したいと思います。
 
 
-## パケットキャプチャで確認
+## そもそも、モバイルネットワークとは?
 
-UERANSIMとfree5GCで簡単な構成を組んでパケットをキャプチャして確認してみます。
+「端末 (User Equipment)」、「無線アクセスネットワーク (Radio Access Network) 」、「コアネットワーク (Core Network)」の３要素から構成される無線通信設備を指しています。
 
-DHCPやDN-AAAであれば、N3のU-Plane側でそれぞれのプロトコルのやりとりがあるはずです。 一方で、SMFが割り当てる方式であればSM NAS Signalingの中にUEのIPアドレスが入っていることが確認できるはずです。
+端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/490507/6fccda6e-db9a-3fb3-0fcb-3645d1c92d63.png)
 
-N3のU-Plane側のキャプチャを見てみましょう。
+## 5GのOSSについて
 
-![Pic](n3.png)
+5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。
 
-UEのIPアドレスが確定した状態のパケットしかありません。
+### RAN
+代表的な、OpenAirInterfaceCとUERANSIMについて記載します。それ以外にも、srsRANやSD-RANe等のOSSがあります。
+
+- [OAI-RAN](https://gitlab.eurecom.fr/oai/openairinterface5g/)
+  - OpenAirInterface Software Alliance(OSA)が提供する3GPPプロトコルに準拠した無線アクセスネットワーク系（eNB/gNB/UE）のソフトウェア
+  - 3GPP仕様に則り開発されているため、リファレンスコードとしても利用される
+  
+- [UERANSIM](https://github.com/aligungr/UERANSIM) 
+  - オープンソースの5G端末（UE）や無線アクセスネットワーク（RAN）を実装
+  - 主にコアネットワークと接続するための上位レイヤーのプロトコル(NGAP,NASなど)が実装されている
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/490507/b4f8e37d-5b9c-d86f-9d2c-77907c322104.png)
+
+### CN
+代表的な、free5GCとOpen5GSについて記載します。それ以外にも、magmaやSD-Core等、様々なOSSがあります。
+
+- [free5GC](https://github.com/free5gc/free5gc)
+  - 3GPP Realse15に準拠したオープンソースソフトウェアの5Gコアであり、StandAlone（SA）構成に対応
+  - 様々なネットワークファンクションを実装（NRF/AMF/AUSF/SMF/PCF/UDM/UDR/NSSF/UPF/N3IWF）
+  - コミュニティの動きも活発で、「[free5GC forum](https://forum.free5gc.org/)」も存在
+  
+- [Open5GS](https://github.com/open5gs/open5gs) 
+  - C言語で実装された、オープンソースソフトウェアの5Gコア及びEPC
+  - 3GPP Realse16に準拠し、StandAlone（SA）構成に対応
+
+- [OAI-CN](https://gitlab.eurecom.fr/oai/cn5g) 
+  - OpenAirInterface Software Alliance(OSA)が提供する3GPPプロトコルに準拠したコアネットワーク系（EPC and 5G）のソフトウェア
+  - 3GPP仕様に則り開発されているため、リファレンスコードとしても利用される
+
+- [magma](https://github.com/magma) 
+  - 新興国にコネクティビティを届けることを目的に開発が始まったOSS。EPCの機能(A-GW)だけではなく集中管理機能(Orchestrator)やMNOとの連携機能(F-GW)を有する。
+  - 5Gコアについては、Telecom Infra Projectと連携して最小構成版Minimum Viable Core(MVC版)を開発中。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/490507/394eec47-1f6c-461c-3531-74e2b12465a6.png)
+
+## 5GのOSSってどこまで使えるの？
+5GのOSSも様々なコミュニティで開発が進んでいる状況で、群雄割拠の状態です。
+OSS実装の完成度や、特徴について、[free5GC](https://github.com/free5gc/free5gc)を例に記載します。
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/490507/29ee0192-3c65-e110-ba51-e202b43ef1ce.png)
+
+* 小規模に実証実験を行うレベルまでは、5GコアのOSSも成長してきており、5G特有の機能・実装も進んでいます。
+* 構築も簡単で導入しやすいのですが、商用を見据えると、性能面や運用面でまだまだ課題が残る状況です。
+
+## 5GのOSS関連で困ったことがあったら
+モバイルネットワークに関連するOSSの開発者・ユーザ同士で情報交換や新たな繋がりを形成する場として、[Open Mobile Network Infra Community](https://omni-jp.github.io/)を活用してみてはいかがでしょうか。
+
+## 最後に
+5GのOSSにより、モバイルネットワークを自営でかつ簡単に構築可能になりつつあります。
+この機会にお手元のPCで5G環境を構築してみてはいかがでしょうか？
