@@ -18,6 +18,7 @@ draft: true
 「端末 (User Equipment)」、「無線アクセスネットワーク (Radio Access Network) 」、「コアネットワーク (Core Network)」の３要素から構成される無線通信設備を指しています。
 
 端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。
+
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/490507/6fccda6e-db9a-3fb3-0fcb-3645d1c92d63.png)
 
 ## 5GのOSSについて
