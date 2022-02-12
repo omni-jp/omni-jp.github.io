@@ -72,7 +72,6 @@ OSS実装の完成度や、特徴について、[free5GC](https://github.com/fre
 モバイルネットワークに関連するOSSの開発者・ユーザ同士で情報交換や新たな繋がりを形成する場として、[Open Mobile Network Infra Community](https://omni-jp.github.io/)を活用してみてはいかがでしょうか。
 
 過去のMeetupやHands-onについてもYouTubeにて公開しております。
-
 イベントの様子がわかると思いますので、ぜひご覧ください。
 
 https://www.youtube.com/channel/UCnZp6DJTQQfoT6rLt8CBz5g
@@ -84,6 +83,7 @@ https://join.slack.com/t/omni-jp/shared_invite/zt-nrwl8rw3-gZIS1FckzeQ2efagTrWUp
 これまでの活動成果は以下のgithubにまとめております。ぜひご覧ください。
 
 https://github.com/omni-jp
+
 https://omni-jp.github.io/
 
 ## 最後に
