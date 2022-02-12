@@ -18,7 +18,8 @@
 最近では、5Gネットワークをオープンソースソフトウェア（以下、OSS）で実現する動きが出始めており、個人でも手軽に5G環境を構築することが可能となっています。
 本記事では、5GのOSSについて紹介したいと思います。
 そもそも、モバイルネットワークとは? 「端末 (User Equipment)」、「無線アクセスネットワーク (Radio Access Network) 」、「コアネットワーク (Core Network)」の３要素から構成される無線通信設備を指しています。
-端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。 5GのOSSについて 5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。
+端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。
+5GのOSSについて 5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。
 RAN 代表的な、OpenAirInterfaceCとUERANSIMについて記載します。それ以外にも、srsRANやSD-RANe等のOSSがあります。
   OAI-RAN
  OpenAirInterface Software Alliance(OSA)が提供する3GPPプロトコルに準拠した無線アクセスネットワーク系（eNB/gNB/UE）のソフトウェア 3GPP仕様に則り開発されているため、リファレンスコードとしても利用される    UERANSIM
@@ -30,13 +31,14 @@ RAN 代表的な、OpenAirInterfaceCとUERANSIMについて記載します。そ
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://omni-jp.github.io/blog/2022/02/12/5g%E3%81%AEoss%E3%81%A3%E3%81%A6%E3%81%A9%E3%81%93%E3%81%BE%E3%81%A7%E4%BD%BF%E3%81%88%E3%82%8B%E3%81%AE/"><meta property="article:section" content="blog">
 <meta property="article:published_time" content="2022-02-12T15:40:00+09:00">
-<meta property="article:modified_time" content="2022-02-12T23:23:10+09:00"><meta property="og:site_name" content="OMNI JP">
+<meta property="article:modified_time" content="2022-02-12T23:26:51+09:00"><meta property="og:site_name" content="OMNI JP">
 <meta itemprop=name content="5GのOSSってどこまで使えるの？">
 <meta itemprop=description content="はじめに 5Gあるいは5Gサービスと聞くとモバイルキャリアにより提供されるネットワークサービスで、大手ベンダ製品を使ってモバイルネットワークが構築されているイメージを持たれる方も多いのではないでしょうか。
 最近では、5Gネットワークをオープンソースソフトウェア（以下、OSS）で実現する動きが出始めており、個人でも手軽に5G環境を構築することが可能となっています。
 本記事では、5GのOSSについて紹介したいと思います。
 そもそも、モバイルネットワークとは? 「端末 (User Equipment)」、「無線アクセスネットワーク (Radio Access Network) 」、「コアネットワーク (Core Network)」の３要素から構成される無線通信設備を指しています。
-端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。 5GのOSSについて 5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。
+端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。
+5GのOSSについて 5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。
 RAN 代表的な、OpenAirInterfaceCとUERANSIMについて記載します。それ以外にも、srsRANやSD-RANe等のOSSがあります。
   OAI-RAN
  OpenAirInterface Software Alliance(OSA)が提供する3GPPプロトコルに準拠した無線アクセスネットワーク系（eNB/gNB/UE）のソフトウェア 3GPP仕様に則り開発されているため、リファレンスコードとしても利用される    UERANSIM
@@ -45,7 +47,7 @@ RAN 代表的な、OpenAirInterfaceCとUERANSIMについて記載します。そ
  3GPP Realse15に準拠したオープンソースソフトウェアの5Gコアであり、StandAlone（SA）構成に対応 様々なネットワークファンクションを実装（NRF/AMF/AUSF/SMF/PCF/UDM/UDR/NSSF/UPF/N3IWF） コミュニティの動きも活発で、「free5GC forum」も存在    Open5GS
  C言語で実装された、オープンソースソフトウェアの5Gコア及びEPC 3GPP Realse16に準拠し、StandAlone（SA）構成に対応    OAI-CN
  OpenAirInterface Software Alliance(OSA)が提供する3GPPプロトコルに準拠したコアネットワーク系（EPC and 5G）のソフトウェア 3GPP仕様に則り開発されているため、リファレンスコードとしても利用される    magma"><meta itemprop=datePublished content="2022-02-12T15:40:00+09:00">
-<meta itemprop=dateModified content="2022-02-12T23:23:10+09:00">
+<meta itemprop=dateModified content="2022-02-12T23:26:51+09:00">
 <meta itemprop=wordCount content="67">
 <meta itemprop=keywords content><meta name=twitter:card content="summary">
 <meta name=twitter:title content="5GのOSSってどこまで使えるの？">
@@ -53,7 +55,8 @@ RAN 代表的な、OpenAirInterfaceCとUERANSIMについて記載します。そ
 最近では、5Gネットワークをオープンソースソフトウェア（以下、OSS）で実現する動きが出始めており、個人でも手軽に5G環境を構築することが可能となっています。
 本記事では、5GのOSSについて紹介したいと思います。
 そもそも、モバイルネットワークとは? 「端末 (User Equipment)」、「無線アクセスネットワーク (Radio Access Network) 」、「コアネットワーク (Core Network)」の３要素から構成される無線通信設備を指しています。
-端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。 5GのOSSについて 5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。
+端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。
+5GのOSSについて 5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。
 RAN 代表的な、OpenAirInterfaceCとUERANSIMについて記載します。それ以外にも、srsRANやSD-RANe等のOSSがあります。
   OAI-RAN
  OpenAirInterface Software Alliance(OSA)が提供する3GPPプロトコルに準拠した無線アクセスネットワーク系（eNB/gNB/UE）のソフトウェア 3GPP仕様に則り開発されているため、リファレンスコードとしても利用される    UERANSIM
@@ -162,8 +165,8 @@ RAN 代表的な、OpenAirInterfaceCとUERANSIMについて記載します。そ
 <p>本記事では、5GのOSSについて紹介したいと思います。</p>
 <h2 id=そもそもモバイルネットワークとは>そもそも、モバイルネットワークとは?</h2>
 <p>「端末 (User Equipment)」、「無線アクセスネットワーク (Radio Access Network) 」、「コアネットワーク (Core Network)」の３要素から構成される無線通信設備を指しています。</p>
-<p>端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。
-<img src=https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/490507/6fccda6e-db9a-3fb3-0fcb-3645d1c92d63.png alt=image.png></p>
+<p>端末＝スマホ、無線アクセスネットワーク＝基地局、コアネットワーク＝認証サーバやルータ等をイメージするとわかりやすいかと思います。</p>
+<p><img src=https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/490507/6fccda6e-db9a-3fb3-0fcb-3645d1c92d63.png alt=image.png></p>
 <h2 id=5gのossについて>5GのOSSについて</h2>
 <p>5GのOSSについて、構成要素（UE/RAN/CN）ごとにそれぞれコミュニティがあり、開発が行われています。</p>
 <h3 id=ran>RAN</h3>
