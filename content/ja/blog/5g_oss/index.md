@@ -84,8 +84,6 @@ https://join.slack.com/t/omni-jp/shared_invite/zt-nrwl8rw3-gZIS1FckzeQ2efagTrWUp
 
 https://github.com/omni-jp
 
-https://omni-jp.github.io/
-
 ## 最後に
 5GのOSSにより、モバイルネットワークを自営でかつ簡単に構築可能になりつつあります。
 この機会にお手元のPCで5G環境を構築してみてはいかがでしょうか？
