@@ -83,6 +83,7 @@ https://join.slack.com/t/omni-jp/shared_invite/zt-nrwl8rw3-gZIS1FckzeQ2efagTrWUp
 これまでの活動成果は以下のgithubにまとめております。ぜひご覧ください。
 
 https://github.com/omni-jp
+https://omni-jp.github.io/
 
 ## 最後に
 5GのOSSにより、モバイルネットワークを自営でかつ簡単に構築可能になりつつあります。
