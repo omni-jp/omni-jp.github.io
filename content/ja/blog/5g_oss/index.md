@@ -71,6 +71,17 @@ OSS実装の完成度や、特徴について、[free5GC](https://github.com/fre
 ## 5GのOSS関連で困ったことがあったら
 モバイルネットワークに関連するOSSの開発者・ユーザ同士で情報交換や新たな繋がりを形成する場として、[Open Mobile Network Infra Community](https://omni-jp.github.io/)を活用してみてはいかがでしょうか。
 
+過去のMeetupやHands-onについてもYouTubeにて公開しております。
+イベントの様子がわかると思いますので、ぜひご覧ください。
+
+https://www.youtube.com/channel/UCnZp6DJTQQfoT6rLt8CBz5g
+
+また、情報交換の場としてOpen Mobile Network Infra CommunityのSlackワークスペースも用意しています。こちらにもご参加いただけますと幸いです。
+https://join.slack.com/t/omni-jp/shared_invite/zt-nrwl8rw3-gZIS1FckzeQ2efagTrWUpA
+
+これまでの活動成果は以下のgithubにまとめております。
+https://github.com/omni-jp
+
 ## 最後に
 5GのOSSにより、モバイルネットワークを自営でかつ簡単に構築可能になりつつあります。
 この機会にお手元のPCで5G環境を構築してみてはいかがでしょうか？
