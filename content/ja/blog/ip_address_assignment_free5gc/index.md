@@ -52,6 +52,9 @@ free5GCではDHCP/DN-AAAではなくSMFがUEのIPアドレスを割り当てる�
 
 SMFのディレクトリを探索してみましょう。
 
+※ 執筆時点ではSMF v1.0.0をベースにしています。
+
+
 ```
 github.com/free5gc/smf/
    +- context/
