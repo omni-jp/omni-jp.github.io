@@ -1,6 +1,6 @@
 ---
 title: 'OMNI Meetup #8'
-date: 2022-04-19
+date: 2022-07-12
 draft: false
 # youtube: pJZJKFTmhRs
 weight: -8
