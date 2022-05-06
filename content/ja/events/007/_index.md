@@ -20,7 +20,7 @@ presentations:
     docs:
       - 'https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%237/omni-free5gc-view-r1.pdf'
   - title: 'gtp5gモジュールと仮想NICの相性に関して'
-    speaker: '	Tajima Ryoya'
+    speaker: 'Tajima Ryoya'
     # docs:
     #   - ''
 ---
