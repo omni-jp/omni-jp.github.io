@@ -9,8 +9,8 @@ meetupInfo: https://omni-jp.connpass.com/event/244922/
 presentations:
   - title: 'コンテンツ屋が昔つくったPGWのOSS紹介'
     speaker: 'Junpei Yoshino'
-    # docs:
-    #   - ''
+    docs:
+      - 'https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%238/open-mobile-network-infra-vol8-yoshino.pdf'
   - title: '5G RAN slicing について'
     speaker: 'Keiichi Kubota'
     docs:
