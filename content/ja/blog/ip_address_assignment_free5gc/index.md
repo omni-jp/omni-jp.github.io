@@ -2,6 +2,7 @@
 title: "UEのIPアドレスの割り当て -- free5GC編 --"
 date: 2021-11-25T15:40:00+09:00
 draft: true
+slug: ip_address_assignment_free5gc
 ---
 
 ## はじめに

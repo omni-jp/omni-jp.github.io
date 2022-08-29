@@ -2,6 +2,7 @@
 title: "5GのOSSってどこまで使えるの？"
 date: 2022-02-12T23:40:00+09:00
 draft: true
+slug: 5g_oss
 ---
 
 ## はじめに
