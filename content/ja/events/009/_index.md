@@ -14,7 +14,7 @@ presentations:
   - title: 'magmaのトレーニングコースを受講してみた'
     speaker: 'Yohei Motomura'
     docs:
-      - 'https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%239/20221011_magma%E3%81%AE%E3%83%88%E3%83%AC%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E3%82%B3%E3%83%BC%E3%82%B9%E3%82%92%E5%8F%97%E8%AC%9B%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F.pdf
+      - 'https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%239/20221011_magma%E3%81%AE%E3%83%88%E3%83%AC%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E3%82%B3%E3%83%BC%E3%82%B9%E3%82%92%E5%8F%97%E8%AC%9B%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F.pdf'
   - title: 'OkinawaOpenDays2022のご紹介'
     speaker: 'Masayuki Yoshida'
       - 'https://raw.githubusercontent.com/omni-jp/meetup/master/meetup%239/OkinawaOpenDays2022%E3%81%AE%E3%81%94%E7%B4%B9%E4%BB%8B.pdf'
